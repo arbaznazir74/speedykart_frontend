@@ -982,22 +982,6 @@ export default function SellerHotBoxProductsPage() {
 
       <ConfirmDialog open={deleteProduct !== null} onOpenChange={(o) => !o && setDeleteProduct(null)} title="Delete Product" description={`Delete "${deleteProduct?.name}"? This will remove it only from your store.`} confirmLabel="Delete" variant="destructive" loading={deleting} onConfirm={handleDeleteProduct} />
 
-      <Dialog open={newUnitOpen} onOpenChange={setNewUnitOpen}>
-        <DialogContent className="max-w-sm">
-          <DialogHeader><DialogTitle className="flex items-center gap-2"><Ruler className="h-5 w-5" /> Create New Unit</DialogTitle></DialogHeader>
-          <div className="space-y-4">
-            <div className="space-y-2"><Label>Unit Name *</Label><Input required placeholder="e.g. Kilogram, Small, Piece" value={newUnitName} onChange={(e) => setNewUnitName(e.target.value)} /></div>
-            <div className="space-y-2"><Label>Short Code *</Label><Input required placeholder="e.g. kg, S, pc" value={newUnitShortCode} onChange={(e) => setNewUnitShortCode(e.target.value)} /></div>
-          </div>
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setNewUnitOpen(false)}>Cancel</Button>
-            <Button type="button" disabled={newUnitSaving || !newUnitName.trim() || !newUnitShortCode.trim()} onClick={handleCreateUnit}>
-              {newUnitSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Create Unit
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
       <Dialog open={newToppingOpen} onOpenChange={setNewToppingOpen}>
         <DialogContent className="max-w-sm">
           <DialogHeader><DialogTitle className="flex items-center gap-2"><ChefHat className="h-5 w-5" /> Create New Topping</DialogTitle></DialogHeader>
