@@ -15,7 +15,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build-time env vars (override at build if needed)
+# Build-time env: set your backend URL here (Northflank / AWS will inject this)
+ARG NEXT_PUBLIC_API_BASE_URL=http://localhost:5050
+ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
