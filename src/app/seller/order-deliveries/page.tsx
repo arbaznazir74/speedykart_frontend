@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -53,7 +53,7 @@ const STATUS_TABS = [
   { value: "cancelled", label: "Cancelled" },
 ];
 
-export default function SellerOrderDeliveriesPage() {
+function SellerOrderDeliveriesPageContent() {
   const searchParams = useSearchParams();
   const [items, setItems] = useState<OrderDelivery[]>([]);
   const [total, setTotal] = useState(0);
@@ -193,5 +193,13 @@ export default function SellerOrderDeliveriesPage() {
 
       <PaginationControls page={page + 1} pageSize={PAGE_SIZE} total={total} onPageChange={(p) => setPage(p - 1)} />
     </div>
+  );
+}
+
+export default function SellerOrderDeliveriesPage() {
+  return (
+    <Suspense>
+      <SellerOrderDeliveriesPageContent />
+    </Suspense>
   );
 }

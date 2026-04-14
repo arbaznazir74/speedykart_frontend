@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, Fragment } from "react";
+import { useState, useEffect, useCallback, Fragment, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -50,7 +50,7 @@ interface InventoryPageProps {
   sellerId?: number;
 }
 
-export function InventoryPage({ platformType, platformLabel, readOnly = false, sellerId }: InventoryPageProps) {
+function InventoryPageContent({ platformType, platformLabel, readOnly = false, sellerId }: InventoryPageProps) {
   const searchParams = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -341,5 +341,13 @@ export function InventoryPage({ platformType, platformLabel, readOnly = false, s
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export function InventoryPage(props: InventoryPageProps) {
+  return (
+    <Suspense>
+      <InventoryPageContent {...props} />
+    </Suspense>
   );
 }

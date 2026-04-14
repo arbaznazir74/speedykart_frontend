@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -64,7 +64,7 @@ interface ProductVariant {
 
 /* ── Page ── */
 
-export default function SellerSpeedyMartProductsPage() {
+function SellerSpeedyMartProductsPageContent() {
   const { user } = useAuth();
   const sellerId = user?.id ?? 0;
   const searchParams = useSearchParams();
@@ -692,5 +692,13 @@ export default function SellerSpeedyMartProductsPage() {
         </DialogContent>
       </Dialog>
     </div>
+  );
+}
+
+export default function SellerSpeedyMartProductsPage() {
+  return (
+    <Suspense>
+      <SellerSpeedyMartProductsPageContent />
+    </Suspense>
   );
 }

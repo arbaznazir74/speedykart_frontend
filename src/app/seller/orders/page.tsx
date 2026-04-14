@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -78,7 +78,7 @@ function toLocalDateStr(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
-export default function SellerOrdersPage() {
+function SellerOrdersPageContent() {
   const searchParams = useSearchParams();
   const [orders, setOrders] = useState<SellerOrder[]>([]);
   const [total, setTotal] = useState(0);
@@ -441,5 +441,13 @@ export default function SellerOrdersPage() {
         onClose={() => setDetailOrder(null)}
       />
     </div>
+  );
+}
+
+export default function SellerOrdersPage() {
+  return (
+    <Suspense>
+      <SellerOrdersPageContent />
+    </Suspense>
   );
 }

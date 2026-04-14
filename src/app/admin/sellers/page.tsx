@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, lazy, Suspense, useMemo } from "react";
+import { useState, useEffect, useCallback, lazy, Suspense, useMemo, Fragment } from "react";
 import { useSearchParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -54,7 +54,7 @@ interface Seller {
 
 type Tab = "all" | "pending" | "location";
 
-export default function SellersPage() {
+function SellersPageContent() {
   const searchParams = useSearchParams();
   const [tab, setTab] = useState<Tab>("all");
   const [items, setItems] = useState<Seller[]>([]);
@@ -576,5 +576,13 @@ export default function SellersPage() {
         </DialogContent>
       </Dialog>
     </div>
+  );
+}
+
+export default function SellersPage() {
+  return (
+    <Suspense>
+      <SellersPageContent />
+    </Suspense>
   );
 }
