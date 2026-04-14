@@ -830,6 +830,19 @@ export default function HotBoxProductsPage() {
                             <Plus className="h-3.5 w-3.5" />
                           </Button>
                         </div>
+                        {newUnitOpen && (
+                          <div className="rounded-lg border bg-slate-50/80 p-3 space-y-2">
+                            <p className="text-xs font-semibold text-slate-600">New Unit</p>
+                            <Input placeholder="Unit name (e.g. Kilogram)" value={newUnitName} onChange={(e) => setNewUnitName(e.target.value)} className="h-9" />
+                            <Input placeholder="Short code (e.g. kg)" value={newUnitShortCode} onChange={(e) => setNewUnitShortCode(e.target.value)} className="h-9" />
+                            <div className="flex gap-2">
+                              <Button type="button" size="sm" className="h-8 text-xs" disabled={newUnitSaving || !newUnitName.trim() || !newUnitShortCode.trim()} onClick={handleCreateUnit}>
+                                {newUnitSaving && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />} Create
+                              </Button>
+                              <Button type="button" variant="ghost" size="sm" className="h-8 text-xs" onClick={() => setNewUnitOpen(false)}>Cancel</Button>
+                            </div>
+                          </div>
+                        )}
                         {Number(singleVariantForm.unitId) > 0 && (
                           <Input type="number" step="0.01" min="0" placeholder="Quantity" className="h-9 mt-1" value={String(singleVariantForm.unitQuantity ?? "")} onChange={(e) => handleSVField("unitQuantity", Number(e.target.value))} />
                         )}
@@ -1075,6 +1088,19 @@ export default function HotBoxProductsPage() {
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
+                {newUnitOpen && (
+                  <div className="rounded-lg border bg-slate-50/80 p-3 space-y-2">
+                    <p className="text-xs font-semibold text-slate-600">New Unit</p>
+                    <Input placeholder="Unit name (e.g. Kilogram)" value={newUnitName} onChange={(e) => setNewUnitName(e.target.value)} className="h-9" />
+                    <Input placeholder="Short code (e.g. kg)" value={newUnitShortCode} onChange={(e) => setNewUnitShortCode(e.target.value)} className="h-9" />
+                    <div className="flex gap-2">
+                      <Button type="button" size="sm" className="h-8 text-xs" disabled={newUnitSaving || !newUnitName.trim() || !newUnitShortCode.trim()} onClick={handleCreateUnit}>
+                        {newUnitSaving && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />} Create
+                      </Button>
+                      <Button type="button" variant="ghost" size="sm" className="h-8 text-xs" onClick={() => setNewUnitOpen(false)}>Cancel</Button>
+                    </div>
+                  </div>
+                )}
                 {Number(variantForm.unitId) > 0 && (
                   <div className="space-y-1">
                     <Label className="text-xs text-muted-foreground">Quantity</Label>
@@ -1268,6 +1294,19 @@ export default function HotBoxProductsPage() {
                       <Plus className="h-3.5 w-3.5" />
                     </Button>
                   </div>
+                  {newUnitOpen && (
+                    <div className="rounded-lg border bg-slate-50/80 p-3 space-y-2">
+                      <p className="text-xs font-semibold text-slate-600">New Unit</p>
+                      <Input placeholder="Unit name (e.g. Kilogram)" value={newUnitName} onChange={(e) => setNewUnitName(e.target.value)} className="h-9" />
+                      <Input placeholder="Short code (e.g. kg)" value={newUnitShortCode} onChange={(e) => setNewUnitShortCode(e.target.value)} className="h-9" />
+                      <div className="flex gap-2">
+                        <Button type="button" size="sm" className="h-8 text-xs" disabled={newUnitSaving || !newUnitName.trim() || !newUnitShortCode.trim()} onClick={handleCreateUnit}>
+                          {newUnitSaving && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />} Create
+                        </Button>
+                        <Button type="button" variant="ghost" size="sm" className="h-8 text-xs" onClick={() => setNewUnitOpen(false)}>Cancel</Button>
+                      </div>
+                    </div>
+                  )}
                   {Number(inlineVariant.unitId) > 0 && (
                     <div className="space-y-1">
                       <Label className="text-xs text-muted-foreground">Quantity</Label>
@@ -1367,22 +1406,6 @@ export default function HotBoxProductsPage() {
       {/* Delete Group */}
       <ConfirmDialog open={deleteGroup !== null} onOpenChange={(o) => !o && setDeleteGroup(null)} title="Delete Product" description={`Delete "${deleteGroup?.name}" from all ${deleteGroup?.products.length ?? 0} seller(s)? This cannot be undone.`} confirmLabel="Delete All" variant="destructive" loading={deleting} onConfirm={handleDeleteGroup} />
 
-      {/* Create New Unit Dialog */}
-      <Dialog open={newUnitOpen} onOpenChange={setNewUnitOpen}>
-        <DialogContent className="max-w-sm">
-          <DialogHeader><DialogTitle className="flex items-center gap-2"><Ruler className="h-5 w-5" /> Create New Unit</DialogTitle></DialogHeader>
-          <div className="space-y-4">
-            <div className="space-y-2"><Label>Unit Name *</Label><Input required placeholder="e.g. Kilogram, Small, Piece" value={newUnitName} onChange={(e) => setNewUnitName(e.target.value)} /></div>
-            <div className="space-y-2"><Label>Short Code *</Label><Input required placeholder="e.g. kg, S, pc" value={newUnitShortCode} onChange={(e) => setNewUnitShortCode(e.target.value)} /></div>
-          </div>
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setNewUnitOpen(false)}>Cancel</Button>
-            <Button type="button" disabled={newUnitSaving || !newUnitName.trim() || !newUnitShortCode.trim()} onClick={handleCreateUnit}>
-              {newUnitSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Create Unit
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

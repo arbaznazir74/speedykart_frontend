@@ -569,7 +569,7 @@ export default function SellerHotBoxProductsPage() {
                           <option value="">No unit</option>
                           {units.map((u) => <option key={u.id} value={u.id}>{u.name} ({u.shortCode})</option>)}
                         </select>
-                        <Button type="button" variant="outline" size="icon" className="h-9 w-9 shrink-0" title="Create new unit" onClick={() => { setNewUnitOpen(!newUnitOpen); setNewUnitName(""); setNewUnitShortCode(""); }}>
+                        <Button type="button" variant="outline" size="icon" className="h-9 w-9 shrink-0" title="Create new unit" onClick={() => { setNewUnitOpen(true); setNewUnitName(""); setNewUnitShortCode(""); }}>
                           <Plus className="h-3.5 w-3.5" />
                         </Button>
                       </div>
@@ -797,7 +797,7 @@ export default function SellerHotBoxProductsPage() {
                     <option value="">No unit</option>
                     {units.map((u) => <option key={u.id} value={u.id}>{u.name} ({u.shortCode})</option>)}
                   </select>
-                  <Button type="button" variant="outline" size="icon" className="h-10 w-10 shrink-0" title="Create new unit" onClick={() => { setNewUnitOpen(!newUnitOpen); setNewUnitName(""); setNewUnitShortCode(""); }}>
+                  <Button type="button" variant="outline" size="icon" className="h-10 w-10 shrink-0" title="Create new unit" onClick={() => { setNewUnitOpen(true); setNewUnitName(""); setNewUnitShortCode(""); }}>
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
@@ -942,7 +942,7 @@ export default function SellerHotBoxProductsPage() {
                       <option value="">No unit</option>
                       {units.map((u) => <option key={u.id} value={u.id}>{u.name} ({u.shortCode})</option>)}
                     </select>
-                    <Button type="button" variant="outline" size="icon" className="h-9 w-9 shrink-0" title="Create new unit" onClick={() => { setNewUnitOpen(!newUnitOpen); setNewUnitName(""); setNewUnitShortCode(""); }}>
+                    <Button type="button" variant="outline" size="icon" className="h-9 w-9 shrink-0" title="Create new unit" onClick={() => { setNewUnitOpen(true); setNewUnitName(""); setNewUnitShortCode(""); }}>
                       <Plus className="h-3.5 w-3.5" />
                     </Button>
                   </div>
