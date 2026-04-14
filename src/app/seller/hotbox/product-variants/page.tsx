@@ -21,7 +21,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from "@/components/ui/dialog";
 import {
-  Loader2, Plus, Pencil, Trash2, ChefHat, X, Package,
+  Loader2, Plus, Pencil, Trash2, ChefHat, X, Package, Ruler,
 } from "lucide-react";
 
 /* ────────────────────────── Types ────────────────────────── */
@@ -87,6 +87,10 @@ export default function SellerHotBoxVariantsPage() {
 
   // Units for the dropdown
   const [units, setUnits] = useState<UnitItem[]>([]);
+  const [newUnitOpen, setNewUnitOpen] = useState(false);
+  const [newUnitName, setNewUnitName] = useState("");
+  const [newUnitShortCode, setNewUnitShortCode] = useState("");
+  const [newUnitSaving, setNewUnitSaving] = useState(false);
 
   // Delete
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -584,17 +588,44 @@ export default function SellerHotBoxVariantsPage() {
             </div>
 
             <div className="space-y-2">
-              <Label>Unit (Size)</Label>
-              <select
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                value={String(variantForm.unitId ?? "")}
-                onChange={(e) => handleField("unitId", e.target.value ? Number(e.target.value) : null)}
-              >
-                <option value="">None (custom name)</option>
-                {units.map((u) => (
-                  <option key={u.id} value={u.id}>{u.name}</option>
-                ))}
-              </select>
+              <Label className="flex items-center gap-1.5"><Ruler className="h-3.5 w-3.5" /> Unit (Size)</Label>
+              <div className="flex items-center gap-2">
+                <select
+                  className="flex h-10 flex-1 rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  value={String(variantForm.unitId ?? "")}
+                  onChange={(e) => handleField("unitId", e.target.value ? Number(e.target.value) : null)}
+                >
+                  <option value="">None (custom name)</option>
+                  {units.map((u) => (
+                    <option key={u.id} value={u.id}>{u.name}</option>
+                  ))}
+                </select>
+                <Button type="button" variant="outline" size="icon" className="h-10 w-10 shrink-0" title="Create new unit" onClick={() => { setNewUnitOpen(true); setNewUnitName(""); setNewUnitShortCode(""); }}>
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              {newUnitOpen && (
+                <div className="rounded-lg border bg-slate-50/80 p-3 space-y-2">
+                  <p className="text-xs font-semibold text-slate-600">New Unit</p>
+                  <Input placeholder="Unit name (e.g. Kilogram)" value={newUnitName} onChange={(e) => setNewUnitName(e.target.value)} className="h-9" />
+                  <Input placeholder="Short code (e.g. kg)" value={newUnitShortCode} onChange={(e) => setNewUnitShortCode(e.target.value)} className="h-9" />
+                  <div className="flex gap-2">
+                    <Button type="button" size="sm" className="h-8 text-xs" disabled={newUnitSaving || !newUnitName.trim() || !newUnitShortCode.trim()} onClick={async () => {
+                      setNewUnitSaving(true);
+                      try {
+                        const r = await apiPost<unknown, { boolResponse: boolean }>(`${API_ENDPOINTS.UNIT}/mine`, { name: newUnitName.trim(), shortCode: newUnitShortCode.trim() });
+                        if (r.isError) throw new Error(r.errorData?.displayMessage ?? "Failed");
+                        const refreshed = await apiGet<UnitItem[]>(API_ENDPOINTS.UNIT, { skip: 0, top: 200 });
+                        setUnits(refreshed.successData ?? []);
+                        setNewUnitOpen(false); setNewUnitName(""); setNewUnitShortCode("");
+                      } catch { /* empty */ } finally { setNewUnitSaving(false); }
+                    }}>
+                      {newUnitSaving && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />} Create
+                    </Button>
+                    <Button type="button" variant="ghost" size="sm" className="h-8 text-xs" onClick={() => setNewUnitOpen(false)}>Cancel</Button>
+                  </div>
+                </div>
+              )}
               <p className="text-xs text-muted-foreground">Select a predefined unit or leave empty and use any variant name above.</p>
             </div>
 
