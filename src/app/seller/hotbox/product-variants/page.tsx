@@ -13,7 +13,7 @@ import { PageHeader } from "@/components/shared/page-header";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { apiGet, apiPost, apiPut, apiDelete } from "@/lib/api-client";
 import { API_ENDPOINTS, PlatformType } from "@/lib/constants";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, getImageSrc } from "@/lib/format";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
@@ -703,7 +703,7 @@ export default function SellerHotBoxVariantsPage() {
               />
               {variantForm.imageBase64 ? (
                 <div className="flex items-center gap-3 mt-2">
-                  <img src={`data:image/jpeg;base64,${variantForm.imageBase64}`} alt="Preview" className="h-16 w-16 rounded-md object-cover border" />
+                  <img src={getImageSrc(String(variantForm.imageBase64 ?? ""))} alt="Preview" className="h-16 w-16 rounded-md object-cover border" />
                   <Button type="button" variant="ghost" size="sm" className="text-destructive text-xs" onClick={() => handleField("imageBase64", "")}>Remove</Button>
                 </div>
               ) : null}

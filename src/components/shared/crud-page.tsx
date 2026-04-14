@@ -25,6 +25,7 @@ import { PageHeader } from "./page-header";
 import { PaginationControls } from "./pagination-controls";
 import { ConfirmDialog } from "./confirm-dialog";
 import { Pencil, Trash2, Loader2, Search } from "lucide-react";
+import { getImageSrc } from "@/lib/format";
 
 export interface ColumnDef<T> {
   key: string;
@@ -287,7 +288,7 @@ export function CrudPage<T>({
                     {formData[field.key] ? (
                       <div className="flex items-center gap-3">
                         <img
-                          src={`data:image/jpeg;base64,${formData[field.key]}`}
+                          src={getImageSrc(formData[field.key] as string)}
                           alt="Preview"
                           className="h-16 w-16 rounded-md object-cover border"
                         />

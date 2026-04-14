@@ -21,7 +21,7 @@ import { PaginationControls } from "@/components/shared/pagination-controls";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { apiGet, apiPost, apiPut, apiDelete } from "@/lib/api-client";
 import { API_BASE_URL, API_ENDPOINTS } from "@/lib/constants";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, getImageSrc } from "@/lib/format";
 import {
   RefreshCw, Plus, Eye, Trash2, Truck, UserPlus, BarChart3, Loader2, Wifi, WifiOff, CheckCircle2, Upload, Pencil, Save, X, Download,
 } from "lucide-react";
@@ -545,7 +545,7 @@ export default function DeliveryBoysPage() {
                     { label: "Driving License", val: detailBoy.drivingLicensePhoto, fname: "driving-license" },
                     { label: "Aadhaar Card", val: detailBoy.aadhaarPhoto, fname: "aadhaar-card" },
                   ] as const).map(({ label, val, fname }) => {
-                    const imgUrl = val ? `${API_BASE_URL}/${val.replace(/^content\//, "")}` : null;
+                    const imgUrl = val ? getImageSrc(val) : null;
                     return (
                       <div key={label} className="rounded-xl border bg-slate-50 p-3">
                         <div className="flex items-center justify-between mb-2">
@@ -572,7 +572,7 @@ export default function DeliveryBoysPage() {
                 <p className="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-2">Passport Photo</p>
                 {(() => {
                   const val = detailBoy.passportPhoto;
-                  const imgUrl = val ? `${API_BASE_URL}/${val.replace(/^content\//, "")}` : null;
+                  const imgUrl = val ? getImageSrc(val) : null;
                   return (
                     <div className="w-40 rounded-xl border bg-slate-50 p-3">
                       <div className="flex items-center justify-between mb-2">

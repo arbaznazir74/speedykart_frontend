@@ -14,7 +14,7 @@ import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { TagPicker } from "@/components/shared/tag-picker";
 import { apiGet, apiPost, apiPut, apiDelete } from "@/lib/api-client";
 import { API_ENDPOINTS, PlatformType } from "@/lib/constants";
-import { formatCurrency } from "@/lib/format";
+import { formatCurrency, getImageSrc } from "@/lib/format";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
@@ -853,7 +853,7 @@ export default function HotBoxProductsPage() {
                       <div className="space-y-1.5"><Label className="text-xs text-muted-foreground">Image</Label>
                         <input type="file" accept="image/*" className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium cursor-pointer"
                           onChange={(e) => { const f = e.target.files?.[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => { const s = rd.result as string; handleSVField("imageBase64", s.includes(",") ? s.split(",")[1] : s); }; rd.readAsDataURL(f); }} />
-                        {singleVariantForm.imageBase64 ? (<div className="flex items-center gap-3 mt-2"><img src={`data:image/jpeg;base64,${singleVariantForm.imageBase64}`} alt="" className="h-14 w-14 rounded-lg object-cover border" /><Button type="button" variant="ghost" size="sm" className="text-destructive text-xs h-7" onClick={() => handleSVField("imageBase64", "")}>Remove</Button></div>) : null}
+                        {singleVariantForm.imageBase64 ? (<div className="flex items-center gap-3 mt-2"><img src={getImageSrc(String(singleVariantForm.imageBase64 ?? ""))} alt="" className="h-14 w-14 rounded-lg object-cover border" /><Button type="button" variant="ghost" size="sm" className="text-destructive text-xs h-7" onClick={() => handleSVField("imageBase64", "")}>Remove</Button></div>) : null}
                       </div>
                     </div>
                   ) : (
@@ -1114,7 +1114,7 @@ export default function HotBoxProductsPage() {
               <div className="space-y-2"><Label>Image</Label>
                 <input type="file" accept="image/*" className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium cursor-pointer"
                   onChange={(e) => { const f = e.target.files?.[0]; if (!f) return; const r = new FileReader(); r.onload = () => { const s = r.result as string; handleVField("imageBase64", s.includes(",") ? s.split(",")[1] : s); }; r.readAsDataURL(f); }} />
-                {variantForm.imageBase64 ? (<div className="flex items-center gap-3 mt-2"><img src={`data:image/jpeg;base64,${variantForm.imageBase64}`} alt="" className="h-16 w-16 rounded-md object-cover border" /><Button type="button" variant="ghost" size="sm" className="text-destructive text-xs" onClick={() => handleVField("imageBase64", "")}>Remove</Button></div>) : null}
+                {variantForm.imageBase64 ? (<div className="flex items-center gap-3 mt-2"><img src={getImageSrc(String(variantForm.imageBase64 ?? ""))} alt="" className="h-16 w-16 rounded-md object-cover border" /><Button type="button" variant="ghost" size="sm" className="text-destructive text-xs" onClick={() => handleVField("imageBase64", "")}>Remove</Button></div>) : null}
               </div>
               <DialogFooter>
                 <Button type="button" variant="outline" onClick={() => setVariantDialog(false)}>Cancel</Button>
@@ -1320,7 +1320,7 @@ export default function HotBoxProductsPage() {
                 <div className="space-y-2"><Label>Image</Label>
                   <input type="file" accept="image/*" className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium cursor-pointer"
                     onChange={(e) => { const f = e.target.files?.[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => { const s = rd.result as string; handleInlineField("imageBase64", s.includes(",") ? s.split(",")[1] : s); }; rd.readAsDataURL(f); }} />
-                  {inlineVariant.imageBase64 ? (<div className="flex items-center gap-3 mt-2"><img src={`data:image/jpeg;base64,${inlineVariant.imageBase64}`} alt="" className="h-16 w-16 rounded-md object-cover border" /><Button type="button" variant="ghost" size="sm" className="text-destructive text-xs" onClick={() => handleInlineField("imageBase64", "")}>Remove</Button></div>) : null}
+                  {inlineVariant.imageBase64 ? (<div className="flex items-center gap-3 mt-2"><img src={getImageSrc(String(inlineVariant.imageBase64 ?? ""))} alt="" className="h-16 w-16 rounded-md object-cover border" /><Button type="button" variant="ghost" size="sm" className="text-destructive text-xs" onClick={() => handleInlineField("imageBase64", "")}>Remove</Button></div>) : null}
                 </div>
                 {/* Inline toppings */}
                 <div className="space-y-3 pt-2 border-t">

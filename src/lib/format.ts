@@ -33,6 +33,12 @@ export function getImageSrc(image: string | null | undefined): string {
   ) {
     return image;
   }
+  // If it looks like a file path (contains / or \), treat as relative URL on backend
+  if (image.includes("/") || image.includes("\\")) {
+    const { API_BASE_URL } = require("@/lib/constants");
+    const cleaned = image.replace(/^(wwwroot[/\\]?|content[/\\]?)/, "");
+    return `${API_BASE_URL}/${cleaned}`;
+  }
   return `data:image/jpeg;base64,${image}`;
 }
 

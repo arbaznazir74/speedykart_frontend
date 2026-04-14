@@ -189,7 +189,7 @@ export default function SellerSpeedyMartCategoriesPage() {
                 onChange={(e) => { const f = e.target.files?.[0]; if (!f) return; const rd = new FileReader(); rd.onload = () => { const s = rd.result as string; setSuggestImage(s.includes(",") ? s.split(",")[1] : s); }; rd.readAsDataURL(f); }} />
               {suggestImage && (
                 <div className="flex items-center gap-3 mt-1">
-                  <img src={`data:image/jpeg;base64,${suggestImage}`} alt="Preview" className="h-14 w-14 rounded-lg object-cover border" />
+                  <img src={getImageSrc(suggestImage)} alt="Preview" className="h-14 w-14 rounded-lg object-cover border" />
                   <Button type="button" variant="ghost" size="sm" className="text-destructive text-xs h-7" onClick={() => setSuggestImage("")}>Remove</Button>
                 </div>
               )}
